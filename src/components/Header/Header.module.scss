@@ -1,0 +1,26 @@
+.nav {
+  background: #3977BB;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 0px 12px;
+  z-index: 99;
+  display: flex;
+  justify-content: space-between;
+
+  * {
+    padding: 10px 0px;
+  }
+
+  .left {
+
+  }
+
+  .right {
+    li {
+      display: inline-block;
+      padding: 0px 10px;
+    }
+  }
+}
