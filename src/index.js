@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import './index.module.scss'
+import './index.module.scss';
+require('dotenv').config();
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
