@@ -4,6 +4,7 @@ import Storage from './storage/Storage';
 import { Redirect } from 'react-router-dom';
 
 const configuredAxios = axios.create({
+  // baseURL: 'https://api.github.com/',
   baseURL: process.env.REACT_APP_BASE_API_URL,
 });
 

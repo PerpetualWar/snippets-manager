@@ -1,0 +1,15 @@
+.container {
+  background: white;
+  width: 650px;
+  height: 100vh;
+  position: relative;
+  top: 0;
+  left: 0;
+  // display: flex;
+
+  .button-load {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+  }
+}

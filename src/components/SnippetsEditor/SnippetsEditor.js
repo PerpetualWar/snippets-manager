@@ -1,11 +1,8 @@
 import React from 'react';
+import style from './SnippetsEditor.module.scss';
 
 function SnippetsEditor() {
-  return (
-    <div>
-      from SnippetsEditor
-    </div>
-  );
+  return <div className={style.container}>from SnippetsEditor</div>;
 }
 
 export default SnippetsEditor;

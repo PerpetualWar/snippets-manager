@@ -1,5 +1,5 @@
 .nav {
-  background: #3977BB;
+  background: #3977bb;
   position: fixed;
   top: 0;
   left: 0;
@@ -8,13 +8,14 @@
   z-index: 99;
   display: flex;
   justify-content: space-between;
+  color: white;
 
   * {
     padding: 10px 0px;
+    margin: auto 0;
   }
 
   .left {
-
   }
 
   .right {
