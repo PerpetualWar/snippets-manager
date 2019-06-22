@@ -1,9 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import Storage from './storage/Storage';
+import Storage from './storage/storage';
 
 const configuredAxios = axios.create({
-  // baseURL: 'https://api.github.com/',
   baseURL: process.env.REACT_APP_BASE_API_URL,
 });
 
@@ -24,25 +23,7 @@ configuredAxios.interceptors.response.use(
 
     console.log('err.response :', err.message);
 
-    if (err.response.status === 401 && !originalReq._retry) {
-      originalReq._retry = true;
-
-      if (!Storage.get('refresh_token')) {
-        Promise.reject('Session expired');
-        window.location.replace('/login');
-      }
-
-      const refreshToken = Storage.get('refresh_token');
-
-      return axios
-        .post('https://weathery-api.herokuapp.com/refresh', null, {
-          method: 'post',
-          headers: { Authorization: `Bearer ${refreshToken}` },
-        })
-        .then(({ data }) => {
-          Storage.set('access_token', data.access_token);
-          return configuredAxios(originalReq);
-        });
+    if (err.response.status === 401) {
     }
 
     return Promise.reject(err);

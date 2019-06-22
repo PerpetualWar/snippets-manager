@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Header from './components/Header/Header';
 import SnippetsList from './components/SnippetsList/SnippetsList';
 import SnippetsEditor from './components/SnippetsEditor/SnippetsEditor';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import style from './App.module.scss';
-import Storage from './util/storage/Storage';
+import Storage from './util/storage/storage';
 import { initiateLogin, sendCode } from './services/api/login';
 import { getUserGists } from './services/api/gists';
 import { getUserInfo } from './services/api/users';
@@ -12,18 +12,14 @@ import getQueryVariable from './util/getQueryVariable';
 import Spinner from './components/Spinner/Spinner';
 
 window.onload = async function(event) {
-  console.log('load event :', event);
-  console.log('window.location.href :', window.location.href);
   const code = getQueryVariable('code');
-  console.log('code :', code);
 
   if (code) {
     const { data } = await sendCode(code);
     window.location.href = 'http://localhost:3000/';
-    console.log('res :', data);
+
     if (data.includes('access_token')) {
       const token = data.substring(data.indexOf('=') + 1, data.indexOf('&'));
-      console.log('token :', data, token);
       Storage.set('access_token', token);
     }
   }
