@@ -11,10 +11,12 @@ import getQueryVariable from './util/getQueryVariable';
 
 function App() {
   let code;
+  let access_token;
   let count = 0;
   window.addEventListener('message', async event => {
     code = getQueryVariable('code');
-    console.log(code, window.location);
+    access_token = getQueryVariable('access_token');
+    console.log('access token', code, access_token);
     if (code && count === 0) {
       const res = await sendCode(code);
       console.log('res :', res);

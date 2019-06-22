@@ -4,43 +4,77 @@ import SnippetsList from './components/SnippetsList/SnippetsList';
 import SnippetsEditor from './components/SnippetsEditor/SnippetsEditor';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import style from './App.module.scss';
-import { initiateLogin, sendCode, revoke } from './services/api/login';
-import { getUserGists, getAllPublicGists } from './services/api/gists';
-import GitHubLogin from 'react-github-login';
+import Storage from './util/storage/Storage';
+import { initiateLogin, sendCode } from './services/api/login';
+import { getUserGists } from './services/api/gists';
+import { getUserInfo } from './services/api/users';
 import getQueryVariable from './util/getQueryVariable';
+import Spinner from './components/Spinner/Spinner';
+
+window.onload = async function(event) {
+  console.log('load event :', event);
+  console.log('window.location.href :', window.location.href);
+  const code = getQueryVariable('code');
+  console.log('code :', code);
+
+  if (code) {
+    const { data } = await sendCode(code);
+    window.location.href = 'http://localhost:3000/';
+    console.log('res :', data);
+    if (data.includes('access_token')) {
+      const token = data.substring(data.indexOf('=') + 1, data.indexOf('&'));
+      console.log('token :', data, token);
+      Storage.set('access_token', token);
+    }
+  }
+};
 
 class App extends Component {
-  // let code;
-  // let count = 0;
-  // window.addEventListener('message', async event => {
-  //   code = getQueryVariable('code');
-  //   console.log(code, window.location);
-  //   if (code && count === 0) {
-  //     const res = await sendCode(code);
-  //     console.log('res :', res);
-  //     count += 1;
-  //   }
-  // });
-
   state = {
     userGists: null,
     pageNumber: 1,
+    editor: {
+      name: '',
+      desc: '',
+      content: '',
+    },
+    allGistsListed: false,
+    profile: null,
+    loading: false,
+  };
+
+  componentDidMount = async () => {
+    this.setState({ loading: true });
+    if (Storage.get('access_token')) {
+      const { data } = await getUserInfo();
+      this.fetchUserGists();
+      console.log('data :', data);
+      this.setState({ profile: data });
+    }
+    this.setState({ loading: false });
   };
 
   fetchUserGists = async () => {
     await this.setState({ pageNumber: 1 });
-    const { data } = await getUserGists('PerpetualWar', this.state.pageNumber);
-    this.setState({ userGists: data });
+    const { data } = await getUserGists(
+      this.state.profile.login,
+      this.state.pageNumber
+    );
+    this.setState({ userGists: data, allGistsListed: false });
   };
 
   loadSnippets = async () => {
     await this.setState({ pageNumber: 2 });
-    const { data } = await getUserGists('PerpetualWar', this.state.pageNumber);
+    const { data } = await getUserGists(
+      this.state.profile.login,
+      this.state.pageNumber
+    );
 
     //if fetched the same items, do not add to userGists array, just exit early
     for (const snippet of this.state.userGists) {
       for (const gist of data) {
         if (snippet.id === gist.id) {
+          this.setState({ allGistsListed: true });
           return;
         }
       }
@@ -49,26 +83,53 @@ class App extends Component {
     this.setState({ userGists: [...this.state.userGists, ...data] });
   };
 
+  handleFormChange = (inputType, value) => {
+    const editor = { ...this.state.editor };
+    editor[inputType] = value;
+    this.setState({ editor });
+  };
+
   loginLogic = async () => {
-    // initiateLogin();
-    // console.log(await getAllPublicGists());
-    // getAllPublicGists();
+    initiateLogin();
+  };
+
+  logoutLogic = async () => {
+    Storage.remove('access_token');
+    this.setState({ profile: null });
+    this.forceUpdate();
   };
 
   render() {
     return (
-      <div className="App">
+      <div className={style.app}>
+        {this.state.loading && <Spinner />}
         <Header
           loginLogic={this.loginLogic}
+          logoutLogic={this.logoutLogic}
           fetchUserGists={this.fetchUserGists}
+          profile={this.state.profile}
         />
-        {this.state.userGists && (
-          <SnippetsList
-            userGists={this.state.userGists}
-            loadSnippets={this.loadSnippets}
-          />
+        {Storage.get('access_token') ? (
+          <div className={style.row}>
+            {this.state.userGists && (
+              <SnippetsList
+                userGists={this.state.userGists}
+                loadSnippets={this.loadSnippets}
+                allGistsListed={this.state.allGistsListed}
+              />
+            )}
+            {this.state.userGists && (
+              <SnippetsEditor
+                editor={this.state.editor}
+                handleFormChange={this.handleFormChange}
+              />
+            )}
+          </div>
+        ) : (
+          <div className={style['no-access']}>
+            Please login to access your snippets
+          </div>
         )}
-        <SnippetsEditor />
       </div>
     );
   }

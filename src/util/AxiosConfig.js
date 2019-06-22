@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import Storage from './storage/Storage';
-import { Redirect } from 'react-router-dom';
 
 const configuredAxios = axios.create({
   // baseURL: 'https://api.github.com/',
@@ -9,10 +8,10 @@ const configuredAxios = axios.create({
 });
 
 configuredAxios.interceptors.request.use(req => {
+  console.log('req :', req);
   if (Storage.get('access_token'))
-    req.defaults.headers.common.Authorization = `Bearer ${Storage.get(
-      'access_token'
-    )}`;
+    req.headers.common.Authorization = `Bearer ${Storage.get('access_token')}`;
+
   return req;
 });
 

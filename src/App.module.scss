@@ -1,3 +1,17 @@
-.btn {
-  background: red;
+.app {
+  // display: flex;
+  // display: grid;
+  // grid-template-columns: 650px 1fr;
+  // grid-template-rows: 50px 1fr;
+  // grid-template-areas:
+  //   'header header'
+  //   'list editor';
+  .row {
+    display: flex;
+  }
+
+  .no-access {
+    text-align: center;
+    padding: 80px 0;
+  }
 }

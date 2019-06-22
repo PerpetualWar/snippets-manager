@@ -1,15 +1,20 @@
 .container {
+  // grid-area: 'list';
   background: white;
   width: 650px;
   height: 100vh;
   position: relative;
   top: 0;
   left: 0;
-  // display: flex;
 
   .button-load {
     display: block;
     width: 200px;
     margin: 0 auto;
+    border: 1px solid lightgray;
   }
 }
+
+// .fixed {
+//   flex: 0 0 650px;
+// }

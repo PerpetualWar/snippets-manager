@@ -2,27 +2,30 @@ import React from 'react';
 import styles from './Header.module.scss';
 import Storage from '../../util/storage/Storage';
 
-function Header({ loginLogic, fetchUserGists }) {
+function Header({ loginLogic, logoutLogic, profile }) {
   return (
     <nav className={styles.nav}>
-      <div className={styles.left}>Snippets Manager</div>
+      <div className={styles.left}>
+        <h4>Snippets Manager</h4>
+      </div>
       <ul className={styles.right}>
         <li>
-          <button className="btn btn-primary" onClick={fetchUserGists}>
-            Fetch
-          </button>
+          {profile && (
+            <img
+              style={{ height: '60px', width: '40px' }}
+              src={profile.avatar_url}
+              alt="avatar"
+            />
+          )}
         </li>
-        <li>Username</li>
+        <li>{profile && profile.name}</li>
         <li>
           {Storage.get('access_token') ? (
-            <button
-              className="btn btn-primary"
-              onClick={Storage.remove('access_token')}
-            >
+            <button className="btn btn-light" onClick={logoutLogic}>
               Logout
             </button>
           ) : (
-            <button className="btn btn-primary" onClick={loginLogic}>
+            <button className="btn btn-light" onClick={loginLogic}>
               Login
             </button>
           )}
