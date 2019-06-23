@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import style from './App.module.scss';
 import { initiateLogin, sendCode, revoke } from './services/api/login';
 import { getUserGists, getAllPublicGists } from './services/api/gists';
-import GitHubLogin from 'react-github-login';
 import getQueryVariable from './util/getQueryVariable';
 
 function App() {
