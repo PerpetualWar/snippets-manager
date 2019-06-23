@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Header.module.scss';
-import Storage from '../../util/storage/storage';
+import Storage from '../../util/storage';
 
 function Header({ loginLogic, logoutLogic, profile }) {
   return (

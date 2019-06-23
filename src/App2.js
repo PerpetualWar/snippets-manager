@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import SnippetsList from './components/SnippetsList/SnippetsList';
 import SnippetsEditor from './components/SnippetsEditor/SnippetsEditor';
 import style from './App.module.scss';
-import Storage from './util/storage/storage.js';
+import Storage from './util/storage';
 import { initiateLogin, sendCode } from './services/api/login';
 import {
   getUserGists,

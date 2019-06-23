@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Storage from './storage/storage';
+import Storage from './storage';
 
 const configuredAxios = axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
