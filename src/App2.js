@@ -22,7 +22,7 @@ window.onload = async function(event) {
 
   if (code) {
     const { data } = await sendCode(code);
-    window.location.href = 'http://localhost:3000/';
+    window.location.href = process.env.REACT_APP_URL;
 
     if (data.includes('access_token')) {
       const token = data.substring(data.indexOf('=') + 1, data.indexOf('&'));
