@@ -1,4 +1,4 @@
-import axios from '../../util/axiosConfig';
+import axios from '../../util/ac';
 
 export const getAllPublicGists = () => axios.get(`gists/public`);
 

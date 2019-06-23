@@ -1,5 +1,4 @@
 import axios from 'axios';
-// import axios from '../../util/axiosConfig';
 
 export const initiateLogin = () => {
   return (window.location.href = `${
