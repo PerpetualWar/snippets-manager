@@ -5,13 +5,13 @@ import style from './SnippetsList.module.scss';
 function SnippetsList({ userGists, loadSnippets, allGistsListed, ...props }) {
   console.log('props :', props);
   return (
-    // <div className={`col ${style.fixed}`}>
-    <div className={style.container}>
+    <div className={`col-lg-6`}>
+      {/* <div className={style.container}> */}
       {userGists.map(gist => (
         <SnippetsItem gist={gist} key={gist.id} {...props} />
       ))}
       <button
-        className={`btn btn-light ${style['button-load']}`}
+        className={`btn btn-light btn-block ${style['button-load']}`}
         onClick={loadSnippets}
         disabled={allGistsListed}
       >

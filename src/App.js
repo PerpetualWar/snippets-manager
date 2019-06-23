@@ -33,16 +33,9 @@ function App() {
   };
   return (
     <div className="App">
-      {/* <Router> */}
-      {/* <GitHubLogin
-        clientId="7c82a4326bf5e869b8bd"
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-      /> */}
       <Header />
       <SnippetsList />
       <SnippetsEditor />
-      {/* </Router> */}
       <button className={style.btn} onClick={loginLogic}>
         Login
       </button>

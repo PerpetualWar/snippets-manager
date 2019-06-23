@@ -2,7 +2,7 @@
   background: white;
   margin: 5px 0;
   min-height: 100px;
-  border: 1px solid black;
+  border: 1px solid lightgray;
   border-radius: 5px;
   cursor: pointer;
 
@@ -12,7 +12,9 @@
     // border-bottom: 0.5px solid black;
   }
   .header {
-    background: lightgrey;
+    // background: lightgrey;
+    // border-bottom: 1px solid black;
+    font-weight: 700;
   }
   .content {
     background: white;
@@ -23,4 +25,8 @@
     word-wrap: break-word;
     word-break: break-all;
   }
+}
+.selected {
+  border: 0px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }

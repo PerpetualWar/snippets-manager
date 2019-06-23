@@ -6,15 +6,16 @@
   position: relative;
   top: 0;
   left: 0;
-
-  .button-load {
-    display: block;
-    width: 200px;
-    margin: 0 auto;
-    border: 1px solid lightgray;
-  }
+  overflow-y: auto;
 }
 
+// .button-load {
+//   display: block;
+//   width: 200px;
+//   margin: 0 auto;
+//   border: 1px solid lightgray;
+//   cursor: pointer;
+// }
 // .fixed {
 //   flex: 0 0 650px;
 // }

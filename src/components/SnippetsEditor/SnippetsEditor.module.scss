@@ -9,15 +9,24 @@
   // margin: 0 10px;
   padding: 0 15px;
 
+  .info {
+    display: flex;
+    justify-content: space-between;
+
+    .button-add-file {
+      align-self: flex-end;
+    }
+  }
+
   .form div {
     padding: 10px 0;
   }
-
-  .button-group {
-    display: flex;
-
-    .btn {
-      margin: 0 5px;
-    }
+}
+.button-group {
+  padding: 10px 0;
+  // display: flex;
+  // justify-content: space-evenly;
+  button {
+    margin: 0 5px 0 0;
   }
 }

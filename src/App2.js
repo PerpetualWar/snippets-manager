@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-// import axios from './util/axiosConfig';
 import Header from './components/Header/Header';
 import SnippetsList from './components/SnippetsList/SnippetsList';
 import SnippetsEditor from './components/SnippetsEditor/SnippetsEditor';
-// import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import style from './App.module.scss';
 import Storage from './util/storage/storage';
 import { initiateLogin, sendCode } from './services/api/login';
@@ -43,6 +41,9 @@ class App extends Component {
       desc: '',
       content: '',
     },
+    selectedItemFiles: [],
+    fileSelectOption: '',
+    editedFileName: '',
     allGistsListed: false,
     profile: null,
     loading: false,
@@ -52,6 +53,7 @@ class App extends Component {
     error: true,
     errorMsg: '',
     notificationActive: false,
+    isAddingFile: false,
   };
 
   editorEmpty = {
@@ -114,16 +116,26 @@ class App extends Component {
     this.forceUpdate();
   };
 
-  selectItem = id => {
-    this.setState({ selectedItemId: id });
-    this.populateEditor(id);
+  selectItem = (id, files) => {
+    console.log('files :', files);
+
+    // this.setState({selectedItemFiles: files})
+
+    // const numberOfFiles = Object.keys(files).length;
+    const editedFileName = Object.keys(files)[0];
+
+    this.setState({
+      selectedItemId: id,
+      editedFileName,
+      selectedItemFiles: files,
+    });
+    this.populateEditor(id, editedFileName);
   };
 
-  populateEditor = async id => {
+  populateEditor = async (gistId, fileName) => {
     try {
       this.setState({ loading: true });
-      const { data } = await getSingleGist(id);
-      const fileName = Object.keys(data.files)[0];
+      const { data } = await getSingleGist(gistId);
 
       this.setState({ selectedItem: data.files[fileName] });
 
@@ -134,7 +146,9 @@ class App extends Component {
         content: data.files[fileName].content,
       };
 
-      this.setState({ editor });
+      const publicChk = data.public;
+
+      this.setState({ editor, publicChk });
       this.setState({ loading: false });
     } catch (error) {
       this.setState({ loading: false });
@@ -145,24 +159,36 @@ class App extends Component {
 
   submitGist = async event => {
     event.preventDefault();
-    const { editor, selectedItemId, publicChk } = this.state;
+    const {
+      editor,
+      selectedItemId,
+      publicChk,
+      editedFileName,
+      isAddingFile,
+    } = this.state;
 
-    const files = {
-      [editor.name]: {
-        content: editor.content,
-        filename: editor.name,
-      },
-    };
+    let files;
+
+    if (!isAddingFile) {
+      files = {
+        [editedFileName]: {
+          content: editor.content,
+          filename: editor.name,
+        },
+      };
+    } else {
+      files = {
+        [editor.name]: {
+          content: editor.content,
+          filename: editor.name,
+        },
+      };
+    }
 
     try {
       if (!selectedItemId) {
         //create gist
         //////////////////////////////
-        if (!selectedItemId)
-          return this.showNotification(
-            'Please enter the data or select existing snippet'
-          );
-
         this.setState({ loading: true });
         await createGist(files, editor.desc, publicChk);
 
@@ -172,22 +198,31 @@ class App extends Component {
       } else {
         //edit gist
         ///////////////////////////////
-
         this.setState({ loading: true });
         await editGist(selectedItemId, files, editor.desc);
         this.fetchUserGists();
+        this.setState({
+          selectedItemId: null,
+          editor: this.editorEmpty,
+          isAddingFile: false,
+        });
         this.setState({ loading: false });
       }
     } catch (error) {
       this.setState({ loading: false });
-      this.showNotification('Something went wrong while contacting server');
+      this.showNotification('Please enter data or select existing snippet');
       console.error(error);
     }
   };
 
-  createNewGist = event => {
+  clearEditor = event => {
     event.preventDefault();
-    this.setState({ selectedItemId: null, editor: this.editorEmpty });
+    this.setState({
+      selectedItemId: null,
+      editor: this.editorEmpty,
+      isAddingFile: false,
+      fileSelectOption: '',
+    });
   };
 
   deleteGist = async event => {
@@ -217,13 +252,66 @@ class App extends Component {
     setTimeout(() => {
       this.setState({
         notificationActive: false,
-        // errorMsg: '',
       });
     }, 3000);
   };
 
   handleCheckboxChange = event => {
     this.setState({ publicChk: !this.state.publicChk });
+  };
+
+  handleAddFile = event => {
+    console.log('working');
+    this.setState({ isAddingFile: true, editor: this.editorEmpty });
+  };
+
+  handleFileSelect = event => {
+    const selectedFile = event.target.value;
+    const { selectedItemId } = this.state;
+    this.setState({ fileSelectOption: selectedFile });
+
+    this.populateEditor(selectedItemId, selectedFile);
+  };
+
+  renderingContext = () => {
+    if (Storage.get('access_token')) {
+      return (
+        <div className="row">
+          {this.state.userGists && (
+            <SnippetsList
+              userGists={this.state.userGists}
+              loadSnippets={this.loadSnippets}
+              allGistsListed={this.state.allGistsListed}
+              selectItem={this.selectItem}
+              selectedItemId={this.state.selectedItemId}
+            />
+          )}
+          {this.state.userGists && (
+            <SnippetsEditor
+              editor={this.state.editor}
+              handleFormChange={this.handleFormChange}
+              submitGist={this.submitGist}
+              clearEditor={this.clearEditor}
+              deleteGist={this.deleteGist}
+              publicChk={this.state.publicChk}
+              handleCheckboxChange={this.handleCheckboxChange}
+              files={this.state.selectedItemFiles}
+              handleAddFile={this.handleAddFile}
+              handleFileSelect={this.handleFileSelect}
+              fileSelectOption={this.state.fileSelectOption}
+              isEmptyEditor={!this.state.selectedItemId}
+              isAddingFile={this.state.isAddingFile}
+            />
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div className={style['no-access']}>
+          Please login to access your snippets
+        </div>
+      );
+    }
   };
 
   render() {
@@ -242,33 +330,7 @@ class App extends Component {
           fetchUserGists={this.fetchUserGists}
           profile={this.state.profile}
         />
-        {Storage.get('access_token') ? (
-          <div className={style.row}>
-            {this.state.userGists && (
-              <SnippetsList
-                userGists={this.state.userGists}
-                loadSnippets={this.loadSnippets}
-                allGistsListed={this.state.allGistsListed}
-                selectItem={this.selectItem}
-              />
-            )}
-            {this.state.userGists && (
-              <SnippetsEditor
-                editor={this.state.editor}
-                handleFormChange={this.handleFormChange}
-                submitGist={this.submitGist}
-                createNewGist={this.createNewGist}
-                deleteGist={this.deleteGist}
-                publicChk={this.state.publicChk}
-                handleCheckboxChange={this.handleCheckboxChange}
-              />
-            )}
-          </div>
-        ) : (
-          <div className={style['no-access']}>
-            Please login to access your snippets
-          </div>
-        )}
+        {this.renderingContext()}
       </div>
     );
   }
