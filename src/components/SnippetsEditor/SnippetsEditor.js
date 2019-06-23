@@ -1,14 +1,22 @@
 import React from 'react';
 import style from './SnippetsEditor.module.scss';
 
-function SnippetsEditor({ editor, handleFormChange }) {
+function SnippetsEditor({
+  editor,
+  handleFormChange,
+  submitGist,
+  createNewGist,
+  deleteGist,
+  publicChk,
+  handleCheckboxChange,
+}) {
   console.log('editor :', editor);
   return (
     // <div className="col-md-auto">
     <div className={style.container}>
       <form className={style.form} action="">
         <div className="name">
-          <label>Email address</label>
+          <label>Name</label>
           <input
             type="text"
             className="form-control"
@@ -16,7 +24,7 @@ function SnippetsEditor({ editor, handleFormChange }) {
             onChange={event => handleFormChange('name', event.target.value)}
             // id="exampleInputEmail1"
             // aria-describedby="emailHelp"
-            placeholder="Enter snippet name"
+            placeholder="Name"
           />
         </div>
         <div className="description">
@@ -40,6 +48,29 @@ function SnippetsEditor({ editor, handleFormChange }) {
             // id="exampleInputPassword1"
             placeholder="Content"
           />
+        </div>
+        <div className={style['button-group']}>
+          <button className="btn btn-primary" onClick={createNewGist}>
+            Create new snippet
+          </button>
+          <button className="btn btn-primary" onClick={submitGist}>
+            Submit changes
+          </button>
+          <button className="btn btn-danger" onClick={deleteGist}>
+            Delete snippet
+          </button>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="checkbox"
+              checked={!publicChk}
+              onChange={handleCheckboxChange}
+              id="defaultCheck2"
+            />
+            <label className="form-check-label" htmlFor="defaultCheck2">
+              Private
+            </label>
+          </div>
         </div>
       </form>
     </div>

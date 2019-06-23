@@ -5,14 +5,14 @@
   bottom: 0;
   right: 0;
   margin: auto;
-  background: rgba(10, 10, 10, 0.5);
+  background: rgba(10, 10, 10, 0.15);
   z-index: 200;
 
   .spinner {
     width: 80px;
     height: 80px;
 
-    border: 2px solid rgba(10, 10, 10, 0.6);
+    border: 2px solid rgba(1, 1, 1, 0.6);
     border-top: 3px solid transparent;
     border-radius: 100%;
 

@@ -6,7 +6,9 @@ function Header({ loginLogic, logoutLogic, profile }) {
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
-        <h4>Snippets Manager</h4>
+        <h4>
+          <a href={process.env.REACT_APP_URL}>Snippets Manager</a>
+        </h4>
       </div>
       <ul className={styles.right}>
         <li>

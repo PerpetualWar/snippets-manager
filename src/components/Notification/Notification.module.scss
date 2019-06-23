@@ -1,0 +1,27 @@
+.container {
+  position: absolute;
+  top: 100px;
+  right: 20px;
+  width: 400px;
+  height: 100px;
+  background: white;
+  border-radius: 5px;
+  z-index: 50;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  opacity: 0;
+  transform: translateX(40px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.active {
+  transition: all 0.5s ease-in-out;
+  opacity: 1;
+  transform: translateX(-40px);
+}
+
+.inactive {
+  transition: all 0.3s ease-in-out;
+  transform: translateX(40px);
+  opacity: 0;
+}

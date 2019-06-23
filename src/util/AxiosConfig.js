@@ -1,9 +1,13 @@
-import React from 'react';
 import axios from 'axios';
 import Storage from './storage/storage';
 
 const configuredAxios = axios.create({
   baseURL: process.env.REACT_APP_BASE_API_URL,
+  headers: {
+    //this header needed so we get newly fetched response
+    //instead of cached response
+    'If-None-Match': '',
+  },
 });
 
 configuredAxios.interceptors.request.use(req => {
@@ -19,11 +23,8 @@ configuredAxios.interceptors.response.use(
     return res;
   },
   err => {
-    const originalReq = err.config;
-
-    console.log('err.response :', err.message);
-
     if (err.response.status === 401) {
+      Storage.remove('access_token');
     }
 
     return Promise.reject(err);

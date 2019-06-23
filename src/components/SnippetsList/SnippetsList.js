@@ -2,12 +2,13 @@ import React from 'react';
 import SnippetsItem from '../SnippetsItem/SnippetsItem';
 import style from './SnippetsList.module.scss';
 
-function SnippetsList({ userGists, loadSnippets, allGistsListed }) {
+function SnippetsList({ userGists, loadSnippets, allGistsListed, ...props }) {
+  console.log('props :', props);
   return (
     // <div className={`col ${style.fixed}`}>
     <div className={style.container}>
       {userGists.map(gist => (
-        <SnippetsItem gist={gist} key={gist.id} />
+        <SnippetsItem gist={gist} key={gist.id} {...props} />
       ))}
       <button
         className={`btn btn-light ${style['button-load']}`}

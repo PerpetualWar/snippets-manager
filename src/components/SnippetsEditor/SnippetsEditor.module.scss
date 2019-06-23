@@ -12,4 +12,12 @@
   .form div {
     padding: 10px 0;
   }
+
+  .button-group {
+    display: flex;
+
+    .btn {
+      margin: 0 5px;
+    }
+  }
 }
