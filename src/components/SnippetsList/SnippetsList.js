@@ -5,8 +5,8 @@ import style from './SnippetsList.module.scss';
 function SnippetsList({ userGists, loadSnippets, allGistsListed, ...props }) {
   console.log('props :', props);
   return (
-    <div className={`col-lg-6`}>
-      {/* <div className={style.container}> */}
+    // <div className={`col-lg-6 ${style.container}`}>
+    <div className={style.container}>
       {userGists.map(gist => (
         <SnippetsItem gist={gist} key={gist.id} {...props} />
       ))}

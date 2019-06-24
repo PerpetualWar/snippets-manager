@@ -1,12 +1,9 @@
 .container {
-  // grid-area: 'list';
-  background: white;
-  width: 1000px;
-  height: 100vh;
-  position: relative;
-  top: 0;
-  left: 0;
-  overflow-y: auto;
+  flex: 0 0 500px;
+  @media (min-width: 500px) {
+    width: 500px;
+    margin: 0 auto;
+  }
 }
 
 // .button-load {
@@ -15,7 +12,4 @@
 //   margin: 0 auto;
 //   border: 1px solid lightgray;
 //   cursor: pointer;
-// }
-// .fixed {
-//   flex: 0 0 650px;
 // }

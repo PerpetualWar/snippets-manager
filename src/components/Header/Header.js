@@ -14,6 +14,7 @@ function Header({ loginLogic, logoutLogic, profile }) {
         <li>
           {profile && (
             <img
+              className={styles.avatar}
               style={{ height: '60px', width: '40px' }}
               src={profile.avatar_url}
               alt="avatar"

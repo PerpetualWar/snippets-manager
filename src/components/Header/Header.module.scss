@@ -24,6 +24,14 @@
     li {
       display: inline-block;
       padding: 0px 10px;
+      @media (max-width: 500px) {
+        display: flex;
+      }
+      .avatar {
+        @media (max-width: 500px) {
+          display: none;
+        }
+      }
     }
   }
 }
