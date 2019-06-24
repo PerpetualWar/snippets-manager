@@ -69,20 +69,20 @@ function SnippetsEditor({
           <label>Name</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${editor.name && style.emp}`}
             value={editor.name}
             onChange={event => handleFormChange('name', event.target.value)}
-            placeholder="Name"
+            placeholder="Please enter name"
           />
         </div>
         <div className="description">
           <label>Description</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${editor.desc && style.emp}`}
             value={editor.desc}
             onChange={event => handleFormChange('desc', event.target.value)}
-            placeholder="Description"
+            placeholder="Please enter description"
           />
         </div>
         <div className="content">
@@ -91,8 +91,8 @@ function SnippetsEditor({
             rows="10"
             value={editor.content}
             onChange={event => handleFormChange('content', event.target.value)}
-            className="form-control"
-            placeholder="Content"
+            className={`form-control ${editor.content && style.emp}`}
+            placeholder="Please enter content"
           />
         </div>
         <div className={style['button-group']}>

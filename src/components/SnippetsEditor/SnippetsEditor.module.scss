@@ -36,8 +36,13 @@
     display: flex;
   }
 
-  .form div {
-    padding: 10px 0;
+  .form {
+    div {
+      padding: 10px 0;
+    }
+    .emp {
+      font-weight: 700;
+    }
   }
 }
 .button-group {
