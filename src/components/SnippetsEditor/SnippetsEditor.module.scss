@@ -16,8 +16,19 @@
     display: none;
     justify-content: space-between;
 
+    @media (max-width: 980px) {
+      padding-top: 18px;
+    }
+
     .button-add-file {
       align-self: flex-end;
+    }
+
+    .withicon {
+      display: flex;
+      &:first-child {
+        // margin: 0 5px 0 0;
+      }
     }
   }
 
@@ -33,7 +44,15 @@
   padding: 10px 0;
   // display: flex;
   // justify-content: space-evenly;
+
+  @media (max-width: 480px) {
+    display: flex;
+    flex-direction: column;
+  }
   button {
     margin: 0 5px 0 0;
+    @media (max-width: 480px) {
+      margin: 5px 0;
+    }
   }
 }

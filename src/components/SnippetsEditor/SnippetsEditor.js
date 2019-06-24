@@ -27,7 +27,17 @@ function SnippetsEditor({
           id="editor"
           className={`${style.info} ${!isEmptyEditor && style.selected}`}
         >
-          <div>{publicChk ? 'Public snippet' : 'Private snippet'}</div>
+          {publicChk ? (
+            <div className={style.withicon}>
+              <i className="fas fa-unlock" />
+              <div>Public snippet</div>
+            </div>
+          ) : (
+            <div className={style.withicon}>
+              <i className="fas fa-lock" />
+              <div>Private snippet</div>
+            </div>
+          )}
           {numberOfFiles > 0 && <div>No of files: {numberOfFiles}</div>}
 
           <button
@@ -46,7 +56,7 @@ function SnippetsEditor({
               onChange={event => handleFileSelect(event)}
             >
               {Object.values(files).map(file => (
-                <option key={file.id} value={file.filename}>
+                <option key={file.raw_url} value={file.filename}>
                   {file.filename}
                 </option>
               ))}

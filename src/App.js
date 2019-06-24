@@ -148,6 +148,7 @@ class App extends Component {
   populateEditor = async (gistId, fileName) => {
     try {
       this.setState({ loading: true });
+      //we must fetch here cause content is not provided in get all gists api call
       const { data } = await getSingleGist(gistId);
 
       this.setState({ selectedItem: data.files[fileName] });
@@ -161,8 +162,7 @@ class App extends Component {
 
       const publicChk = data.public;
 
-      this.setState({ editor, publicChk });
-      this.setState({ loading: false });
+      this.setState({ editor, publicChk, loading: false });
     } catch (error) {
       this.setState({ loading: false });
       this.showNotification('Snippet could not be loaded');
@@ -206,8 +206,11 @@ class App extends Component {
         await createGist(files, editor.desc, publicChk);
 
         this.fetchUserGists();
-        this.setState({ selectedItemId: null, editor: this.editorEmpty });
-        this.setState({ loading: false });
+        this.setState({
+          selectedItemId: null,
+          editor: this.editorEmpty,
+          loading: false,
+        });
       } else {
         //edit gist
         ///////////////////////////////
@@ -218,8 +221,8 @@ class App extends Component {
           selectedItemId: null,
           editor: this.editorEmpty,
           isAddingFile: false,
+          loading: false,
         });
-        this.setState({ loading: false });
       }
     } catch (error) {
       this.setState({ loading: false });
@@ -274,8 +277,11 @@ class App extends Component {
   };
 
   handleAddFile = event => {
-    console.log('working');
-    this.setState({ isAddingFile: true, editor: this.editorEmpty });
+    const { editor } = this.state;
+    this.setState({
+      isAddingFile: true,
+      editor: { id: '', name: '', desc: editor.desc, content: '' },
+    });
   };
 
   handleFileSelect = event => {

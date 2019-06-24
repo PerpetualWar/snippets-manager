@@ -3,7 +3,9 @@ import style from './Notification.module.scss';
 
 function Notification({ message, active }) {
   return (
-    <div className={`${style.container} ${active ? style.active : ''}`}>
+    <div
+      className={`${style.container} ${active ? style.active : style.inactive}`}
+    >
       {message}
     </div>
   );
