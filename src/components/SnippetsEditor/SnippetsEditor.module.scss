@@ -13,12 +13,16 @@
   }
 
   .info {
-    display: flex;
+    display: none;
     justify-content: space-between;
 
     .button-add-file {
       align-self: flex-end;
     }
+  }
+
+  .selected {
+    display: flex;
   }
 
   .form div {

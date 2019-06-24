@@ -23,26 +23,19 @@ function SnippetsEditor({
 
     <div className={style.container}>
       <div>
-        <div className={style.info}>
-          <div>
-            {!isAddingFile && isEmptyEditor
-              ? ''
-              : publicChk
-              ? 'Public snippet'
-              : 'Private snippet'}
-          </div>
-          {!isAddingFile && isEmptyEditor
-            ? ''
-            : numberOfFiles > 0 && <div>No of files: {numberOfFiles}</div>}
+        <div
+          id="editor"
+          className={`${style.info} ${!isEmptyEditor && style.selected}`}
+        >
+          <div>{publicChk ? 'Public snippet' : 'Private snippet'}</div>
+          {numberOfFiles > 0 && <div>No of files: {numberOfFiles}</div>}
 
-          {(isAddingFile || !isEmptyEditor) && (
-            <button
-              onClick={handleAddFile}
-              className={`btn btn-light ${style['button-add-file']}`}
-            >
-              Add file
-            </button>
-          )}
+          <button
+            onClick={handleAddFile}
+            className={`btn btn-light ${style['button-add-file']}`}
+          >
+            Add file
+          </button>
         </div>
         {!isEmptyEditor && !isAddingFile && (
           <div>

@@ -117,11 +117,6 @@ class App extends Component {
   };
 
   selectItem = (id, files) => {
-    console.log('files :', files);
-
-    // this.setState({selectedItemFiles: files})
-
-    // const numberOfFiles = Object.keys(files).length;
     const editedFileName = Object.keys(files)[0];
 
     this.setState({
@@ -130,6 +125,24 @@ class App extends Component {
       selectedItemFiles: files,
     });
     this.populateEditor(id, editedFileName);
+
+    this.moveToEditor();
+    this.emphasizeEditor();
+  };
+
+  emphasizeEditor = () => {
+    console.log('emphasize');
+  };
+
+  moveToEditor = () => {
+    // document.getElementById('editor').scrollIntoView({
+    //   behavior: 'smooth',
+    // });
+    const element = document.getElementById('editor');
+    const elementRect = element.getBoundingClientRect();
+    const absoluteElementTop = elementRect.top + window.pageYOffset;
+    const middle = absoluteElementTop - window.innerHeight / 2;
+    window.scrollTo({ left: 0, top: middle, behavior: 'smooth' });
   };
 
   populateEditor = async (gistId, fileName) => {
