@@ -209,6 +209,7 @@ class App extends Component {
         this.setState({
           selectedItemId: null,
           editor: this.editorEmpty,
+          fileSelectOption: '',
           loading: false,
         });
       } else {
@@ -221,6 +222,7 @@ class App extends Component {
           selectedItemId: null,
           editor: this.editorEmpty,
           isAddingFile: false,
+          fileSelectOption: '',
           loading: false,
         });
       }
