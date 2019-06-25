@@ -7,7 +7,7 @@
   right: 0;
   padding: 0 15px;
 
-  @media (min-width: 500px) and (max-width: 980px) {
+  @media (min-width: 530px) and (max-width: 980px) {
     width: 500px;
     margin: 0 auto;
   }
@@ -15,9 +15,12 @@
   .info {
     display: none;
     justify-content: space-between;
+    align-items: center;
 
     @media (max-width: 980px) {
-      padding-top: 18px;
+      padding-top: 10px;
+      border-top: 1px solid grey;
+      margin-top: 18px;
     }
 
     .button-add-file {

@@ -5,7 +5,7 @@ import Header from '../../components/Header/Header';
 import SnippetsList from '../../components/SnippetsList/SnippetsList';
 import SnippetsEditor from '../../components/SnippetsEditor/SnippetsEditor';
 import Storage from '../../util/storage';
-import { initiateLogin, sendCode } from '../../services/api/login';
+import { initiateLogin } from '../../services/api/login';
 import {
   getUserGists,
   getSingleGist,
