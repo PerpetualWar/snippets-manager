@@ -10,6 +10,7 @@
   @media (min-width: 530px) and (max-width: 980px) {
     width: 500px;
     margin: 0 auto;
+    padding: 60px 0;
   }
 
   h3 {
@@ -20,12 +21,6 @@
   .details {
     display: none;
     opacity: 0;
-
-    @media (max-width: 980px) {
-      padding-top: 10px;
-      border-top: 1px solid grey;
-      margin-top: 18px;
-    }
 
     .button-add-file {
       align-self: flex-end;
