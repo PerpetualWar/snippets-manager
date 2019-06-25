@@ -4,7 +4,7 @@ class LoginPage extends Component {
   componentDidMount = () => {
     var code = window.location.toString().replace(/.+code=/, '');
     console.log('code :', code);
-    window.opener.postMessage({ code, loading: true }, window.location);
+    window.opener.postMessage({ code }, window.location);
     window.close();
   };
   render() {

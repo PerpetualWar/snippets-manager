@@ -14,7 +14,6 @@ import {
   deleteGist,
 } from '../../services/api/gists';
 import { getUserInfo } from '../../services/api/users';
-import getQueryVariable from '../../util/getQueryVariable';
 import style from './Home.module.scss';
 
 class Home extends Component {

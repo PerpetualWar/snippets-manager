@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Storage from './util/storage';
 import { sendCode } from './services/api/login';
+import getQueryVariable from './util/getQueryVariable';
 import LoginPage from './components/LoginPage/LoginPage';
 import Home from './pages/Home/Home';
 
@@ -26,8 +27,6 @@ class App extends Component {
           Storage.set('access_token', token);
           this.setState({ fetchingToken: false });
         }
-        // window.location.href = process.env.REACT_APP_URL;
-        return <Redirect to="/home" />;
       }
     });
   };
@@ -38,7 +37,11 @@ class App extends Component {
         <Route
           path="/"
           render={props => (
-            <Home {...props} fetchingToken={this.state.fetchingToken} />
+            <Home
+              {...props}
+              key={Date.now()}
+              fetchingToken={this.state.fetchingToken}
+            />
           )}
         />
         <Route path="/login" component={LoginPage} exact={true} />
