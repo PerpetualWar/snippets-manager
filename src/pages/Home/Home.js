@@ -91,11 +91,11 @@ class Home extends Component {
     this.setState({ editor });
   };
 
-  loginLogic = async () => {
+  loginLogic = () => {
     initiateLogin();
   };
 
-  logoutLogic = async () => {
+  logoutLogic = () => {
     Storage.remove('access_token');
     this.setState({
       profile: null,
@@ -116,11 +116,6 @@ class Home extends Component {
     this.populateEditor(id, editedFileName);
 
     this.moveToEditor();
-    this.emphasizeEditor();
-  };
-
-  emphasizeEditor = () => {
-    console.log('emphasize');
   };
 
   moveToEditor = () => {
