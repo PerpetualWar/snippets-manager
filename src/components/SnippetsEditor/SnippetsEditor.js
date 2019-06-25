@@ -19,8 +19,6 @@ function SnippetsEditor({
   console.log('editor :', editor);
   const numberOfFiles = Object.keys(files).length;
   return (
-    // <div className={`col-lg-6 ${style.container}`}>
-
     <div className={style.container}>
       <div>
         <div
