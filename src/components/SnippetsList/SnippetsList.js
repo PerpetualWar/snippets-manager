@@ -6,6 +6,7 @@ function SnippetsList({ userGists, loadSnippets, allGistsListed, ...props }) {
   console.log('props :', props);
   return (
     <div className={style.container}>
+      <h3>Snippets list</h3>
       {userGists.map(gist => (
         <SnippetsItem gist={gist} key={gist.id} {...props} />
       ))}

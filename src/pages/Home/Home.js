@@ -311,6 +311,7 @@ class Home extends Component {
               fileSelectOption={this.state.fileSelectOption}
               isEmptyEditor={!this.state.selectedItemId}
               isAddingFile={this.state.isAddingFile}
+              loading={this.state.loading}
             />
           )}
         </div>

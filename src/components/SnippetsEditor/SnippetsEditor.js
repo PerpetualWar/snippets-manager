@@ -15,16 +15,19 @@ function SnippetsEditor({
   handleFileSelect,
   isEmptyEditor,
   isAddingFile,
+  loading,
 }) {
   console.log('editor :', editor);
   const numberOfFiles = Object.keys(files).length;
   return (
     <div className={style.container}>
-      <div>
-        <div
-          id="editor"
-          className={`${style.info} ${!isEmptyEditor && style.selected}`}
-        >
+      <h3>Snippets editor</h3>
+      <div
+        className={`${style.details} ${!isEmptyEditor &&
+          !loading &&
+          style['selected-container']}`}
+      >
+        <div id="editor" className={style.info}>
           {publicChk ? (
             <div className={style.withicon}>
               <i className="fas fa-unlock" />
