@@ -104,18 +104,15 @@ function SnippetsEditor({
             Delete snippet
           </button>
           {isEmptyEditor && (
-            <div className="form-check">
+            <span className={style.checkbox}>
               <input
-                className="form-check-input"
                 type="checkbox"
                 checked={!publicChk}
                 onChange={handleCheckboxChange}
                 id="check1"
               />
-              <label className="form-check-label" htmlFor="check1">
-                Private
-              </label>
-            </div>
+              <label htmlFor="check1">Private</label>
+            </span>
           )}
         </div>
       </form>
