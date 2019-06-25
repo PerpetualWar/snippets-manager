@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Header from './components/Header/Header';
 import SnippetsList from './components/SnippetsList/SnippetsList';
 import SnippetsEditor from './components/SnippetsEditor/SnippetsEditor';
@@ -16,11 +17,27 @@ import { getUserInfo } from './services/api/users';
 import getQueryVariable from './util/getQueryVariable';
 import Spinner from './components/Spinner/Spinner';
 import Notification from './components/Notification/Notification';
+import LoginPage from './components/LoginPage/LoginPage';
 
-window.onload = async function(event) {
-  const code = getQueryVariable('code');
+// window.onload = async function(event) {
+//   const code = getQueryVariable('code');
 
-  if (code) {
+//   if (code) {
+//     const { data } = await sendCode(code);
+//     window.location.href = process.env.REACT_APP_URL;
+
+//     if (data.includes('access_token')) {
+//       const token = data.substring(data.indexOf('=') + 1, data.indexOf('&'));
+//       Storage.set('access_token', token);
+//     }
+//   }
+// };
+
+window.addEventListener('message', async function(event) {
+  var code = event.data;
+  console.log('code :', code);
+  // const code = getQueryVariable('code');
+  if (typeof code === 'string') {
     const { data } = await sendCode(code);
     window.location.href = process.env.REACT_APP_URL;
 
@@ -29,7 +46,7 @@ window.onload = async function(event) {
       Storage.set('access_token', token);
     }
   }
-};
+});
 
 class App extends Component {
   state = {
@@ -338,21 +355,25 @@ class App extends Component {
   render() {
     return (
       <div className={style.app}>
-        {/* <div className={`container-fluid ${style.app}`}> */}
-        {this.state.loading && <Spinner />}
-        {this.state.error && (
-          <Notification
-            message={this.state.errorMsg}
-            active={this.state.notificationActive}
+        <Router>
+          {this.state.loading && <Spinner />}
+          {this.state.error && (
+            <Notification
+              message={this.state.errorMsg}
+              active={this.state.notificationActive}
+            />
+          )}
+          <Header
+            loginLogic={this.loginLogic}
+            logoutLogic={this.logoutLogic}
+            fetchUserGists={this.fetchUserGists}
+            profile={this.state.profile}
           />
-        )}
-        <Header
-          loginLogic={this.loginLogic}
-          logoutLogic={this.logoutLogic}
-          fetchUserGists={this.fetchUserGists}
-          profile={this.state.profile}
-        />
-        {this.renderingContext()}
+          {this.renderingContext()}
+          {/* <Switch> */}
+          <Route path="/login" component={LoginPage} exact={true} />
+          {/* </Switch> */}
+        </Router>
       </div>
     );
   }
