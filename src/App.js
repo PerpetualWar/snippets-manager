@@ -6,25 +6,33 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import Home from './pages/Home/Home';
 import getQueryVariable from './util/getQueryVariable';
 
-window.onload = async function(event) {
-  const code = getQueryVariable('code');
-
-  if (code) {
-    const { data } = await sendCode(code);
-    window.location.href = process.env.REACT_APP_URL;
-
-    if (data.includes('access_token')) {
-      const token = data.substring(data.indexOf('=') + 1, data.indexOf('&'));
-      Storage.set('access_token', token);
-    }
-  }
-};
 class App extends Component {
   state = {
     fetchingToken: false,
   };
 
   componentDidMount = () => {
+    window.onload = async function(event) {
+      const code = getQueryVariable('code');
+
+      if (code) {
+        const { data } = await sendCode(code);
+        window.location.href = process.env.REACT_APP_URL;
+
+        if (data.includes('access_token')) {
+          const token = data.substring(
+            data.indexOf('=') + 1,
+            data.indexOf('&')
+          );
+          Storage.set('access_token', token);
+        }
+      }
+    };
+
+    /**
+     * This implementation, even though better does not work on mobile browser due to
+     * window.opener being null... remains to be seen if workaround is possible...
+     */
     // window.addEventListener('message', async event => {
     //   var msg = event.data;
     //   console.log('msg :', msg);
